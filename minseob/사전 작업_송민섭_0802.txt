@@ -1,0 +1,24 @@
+Github Organization
+https://chunggaeguri.tistory.com/entry/GitHub-%ED%98%91%EC%97%85%EC%9A%A9-%EB%8B%A8%EC%B2%B4-Organization-%EC%82%AC%EC%9A%A9%EB%B2%95
+
+
+ESS (Energy Storage System):
+ESS는 에너지를 저장하는 시스템으로, 주로 전기 에너지를 저장하여 나중에 필요할 때 사용하는 기술
+
+PCS (Power Conversion System):
+PCS는 전력 변환 시스템으로, 에너지 저장 장치에서 저장된 에너지를 전기 그리드에 연결하여 사용할 수 있도록 전력을 변환하는 장치
+
+building info에 solar, ess, pcs - 표시는 시스템이 없는경우를 뜻하는걸로 보임
+따라서 ess_yes, ess_no 이런식으로 변수 생성 필요해보임
+또한 -표시는 0으로 replace
+
+모든 변수 상관관계 살펴보기
+
+tes set에 일조, 일사 정보가 없기에 train set에서 검증셋이 필요해보임
+
+
+EDA
+https://dacon.io/competitions/official/236125/codeshare/8500?page=1&dtype=recent
+
+LSTM은 결과가 딱히였다
+https://dacon.io/competitions/official/236125/talkboard/408930?page=1&dtype=recent
