@@ -1,0 +1,13 @@
+1. feature_selection
+
+2. 첫번째 제출
+
+To Do List
+
+1. 빌딩별, 태양광여부에 따른 군집화
+-> 이후 모든 단계에 1번 적용
+08.10 22:00 
+
+2. XGB 변수중요도, shap 을 이용한 feature selection
+
+3. pycaret

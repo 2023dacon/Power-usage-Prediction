@@ -1,0 +1,26 @@
+1. 인코딩 오류 방지 영어로 변환
+
+2. 풍속, 습도 결측치 행 제거 (풍속 0인 경우 결측치인지? -> 아님 (기상청 관측 기준 '무풍'일 경우 0)
+-> 시간이 중간에 비니까 제거가 아니고 ffill 등으로 대치
+
+3. 강수량, 일사, 일조 feature 삭제
+
+4. 태양광, ess, pcs '-' 를 0으로 대체 및 float64
+
+5. 왜도, 첨도가 높은 feature 로그변환 진행
+연면적, 냉방면적, 태양광, ess, pcs
+
+6. 태양광, ESS 설치 여부 컬럼 생성 solar_no, ess_no (0인경우 True)
+
+7. 불쾌지수 컬럼 생성 discomfort = 0.81 * 기온+ 0.01 * 습도* (0.99 * 기온- 14.3) + 46.3
+
+8. 1, 2, 3 시간 전 기온, 풍속, 습도, 불쾌지수와의 차이 컬럼 생성
+temperature_1 등
+
+9. 주말 및 공휴일 컬럼 생성 holiday
+주말, 공휴일 = True, workday = False
+
+10. ess, pcs 상관관계 매우 높아 pcs 삭제
+
+11. 건물유형 one-hot encoding 진행
+이 후에 label encoding, mean encoding도 해 볼 예정
