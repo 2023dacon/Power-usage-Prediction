@@ -36,6 +36,8 @@
 num_date_time은 건물번호와 시간으로 구성된 ID
 해당 ID에 맞춰 전력사용량 예측값을 answer 컬럼에 기입해야 함
 
+---
+
 ## 평가방식
 - 심사 기준: SMAPE(Symmetric Mean Absolute Percentage Error)
 - 대회 제공 데이터 이외의 외부 데이터 사용 금지
@@ -44,11 +46,25 @@ num_date_time은 건물번호와 시간으로 구성된 ID
 - 따라서 2022.08.25 00:00:00 이전에 제작된 예보 데이터인 test.csv는 활용 가능
 - Pseudo Labeling은 사용 불가
 
-## 접근법
-<h5> 1. 전체 데이터 XGB 모델링</h5>
-<h5> 2. 빌딩 번호별 XGB 모델링</h5>
-<h5> 3. 빌딩 번호, 시간, 요일에 따른 K-means clustering 후 군집별 pycaret 1등 모델 모델링</h5>
-<h5> 4. 빌딩 타입, 시간, 요일에 따른 K-menans clustering 후 군집별 pycaret 1등 모델 모델링</h5>
-<h5> 5. 빌딩 타입, 시간, 요일에 따른 K-menans clustering 후 군집별 pycaret 상위 모델 스태킹</h5>
-<h5> 6. 빌딩 타입, 시간, 요일에 따른 K-menans clustering 후 군집별 pycaret 상위 모델 앙상블</h5>
+---
+## Data Preprocessing
+- 풍속, 습도 결측치 행 ffill을 사용하여 처리
+- 강수량, 일사, 일조 feature 삭제
+- 태양광 용량, ESS 저장 용량, PCS 용량의 '-'를 0으로 대체 및 float 변환
+- 왜도, 첨도가 높은 feature인 연면적, 냉방 면적, 태양광 용량, ESS 저장 용량, PCS 용량을 log 변환
+- 일자 데이터를 활용해 시간, 일, 요일, 달 데이터 생성
+- 태양광, ESS 설치 여부 컬럼 생성
+- 불쾌지수 
+
+
+
+---
+
+## 사용한 모델링 방식
+<h5> 1. 전체 데이터 XGB</h5>
+<h5> 2. 빌딩 번호별 XGB</h5>
+<h5> 3. 빌딩 번호, 시간, 요일에 따른 K-means clustering 후 군집별 pycaret 1등 모델</h5>
+<h5> 4. 빌딩 타입, 시간, 요일에 따른 K-menans clustering 후 군집별 pycaret 기준 SMAPE 1등 모델</h5>
+<h5> 5. 빌딩 타입, 시간, 요일에 따른 K-menans clustering 후 군집별 pycaret 기준 SMAPE 상위 모델 스태킹</h5>
+<h5> 6. 빌딩 타입, 시간, 요일에 따른 K-menans clustering 후 군집별 pycaret 기준 SMAPE 상위 모델 앙상블</h5>
 
