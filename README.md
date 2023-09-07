@@ -36,7 +36,9 @@
 num_date_time은 건물번호와 시간으로 구성된 ID
 해당 ID에 맞춰 전력사용량 예측값을 answer 컬럼에 기입해야 함
 
+
 ---
+
 
 ## 평가방식
 - 심사 기준: SMAPE(Symmetric Mean Absolute Percentage Error)
@@ -46,7 +48,11 @@ num_date_time은 건물번호와 시간으로 구성된 ID
 - 따라서 2022.08.25 00:00:00 이전에 제작된 예보 데이터인 test.csv는 활용 가능
 - Pseudo Labeling은 사용 불가
 
+
 ---
+
+
+
 ## Data Preprocessing
 - 풍속, 습도 결측치 행 ffill을 사용하여 처리
 - 강수량, 일사, 일조 feature 삭제
@@ -59,6 +65,9 @@ num_date_time은 건물번호와 시간으로 구성된 ID
 
 
 ---
+
+
+
 
 ## 사용한 모델링 방식
 <h5> 1. 전체 데이터 XGB</h5>
