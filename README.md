@@ -70,10 +70,13 @@ num_date_time은 건물번호와 시간으로 구성된 ID
 
 
 ## 사용한 모델링 방식
-<h5> 1. 전체 데이터 XGB</h5>
+<div align=center>
+  <h5> 1. 전체 데이터 XGB</h5>
 <h5> 2. 빌딩 번호별 XGB</h5>
 <h5> 3. 빌딩 번호, 시간, 요일에 따른 K-means clustering 후 군집별 pycaret 1등 모델</h5>
 <h5> 4. 빌딩 타입, 시간, 요일에 따른 K-menans clustering 후 군집별 pycaret 기준 SMAPE 1등 모델</h5>
 <h5> 5. 빌딩 타입, 시간, 요일에 따른 K-menans clustering 후 군집별 pycaret 기준 SMAPE 상위 모델 스태킹</h5>
 <h5> 6. 빌딩 타입, 시간, 요일에 따른 K-menans clustering 후 군집별 pycaret 기준 SMAPE 상위 모델 앙상블</h5>
+</div>
+
 
