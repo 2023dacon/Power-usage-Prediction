@@ -89,7 +89,7 @@ num_date_time은 건물번호와 시간으로 구성된 ID
 - XGB feature importance
 - Shap value with XGB
 - RFECV with XGB
-- 상관관계 높은 변수는 다중공선성의 문제를 야기하며 오히려 성능 저하를 일으켜 삭제
+- 상관관계 높은 변수는 다중공선성의 문제를 야기하며 성능 저하를 일으키기 때문에 삭제
 
 ---
 
