@@ -1,3 +1,5 @@
+![image](https://github.com/2023dacon/Power-usage-Prediction/assets/90303745/cea767d4-d41f-4202-a808-552b9406a974)
+
 <div align=center>
   <h1>
   <h1>DACON 2023 전력사용량 예측 AI 경진대회
