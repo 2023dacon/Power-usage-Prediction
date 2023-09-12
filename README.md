@@ -186,10 +186,13 @@ _태양광 용량, ESS 저장 용량, PCS 용량의 왜도와 첨도가 매우 �
 
 _변환 후 4개로 줄어듦_
 
+![image](https://github.com/2023dacon/Power-usage-Prediction/assets/90303745/d638105f-592b-49d8-949e-40ab2e07052e)
+
+
+**모델링 시에 target을 로그변환한 값으로 학습을 하고, 추론 시에는 모델 예측값에 exponential을 적용**
 
 
 <h3>8. 연속형 변수 StandardScaling</h3>
-
 
 
 ---
@@ -198,16 +201,69 @@ _변환 후 4개로 줄어듦_
 ## 파생변수 생성
 
 - 불쾌지수 (기온, 습도 활용)
+
+    train_df['discomfort'] = 0.81 * train_df['temperature'] + 0.01 * train_df['humidity'] * (0.99 * train_df['temperature'] - 14.3) + 46.3
+  
 - 체감온도 (기온, 풍속 활용)
 - 기온, 풍속, 습도, 불쾌지수의 1,2,3 시간 변화
+
+    train_df['temperature_1'] = train_df.groupby('building_number')['temperature'].shift()
+    train_df['temperature_1'] = train_df[train_df['temperature_1'] != 0]['temperature'] - train_df[train_df['temperature_1'] != 0]['temperature_1']
+    train_df['temperature_1'] = train_df['temperature_1'].fillna(0)
+    train_df['temperature_2'] = train_df.groupby('building_number')['temperature'].shift(periods=2)
+    train_df['temperature_2'] = train_df[train_df['temperature_2'] != 0]['temperature'] - train_df[train_df['temperature_2'] != 0]['temperature_2']
+  
 - 주말 및 공휴일
 - 시간, 일, 요일, 달 (빌딩번호/일자정보(num_date_time) 데이터 활용)
 - 태양광, ESS 설치 여부 (태양광 용량, ESS 용량 feature 여부)
 - 불쾌지수, 기온의 3시간, 5시간 이동평균
 - 냉방도일(CDH)
+
+    def CDH(xs):
+        ys = []
+        for i in range(len(xs)):
+            if i < 11:
+                ys.append(np.sum(xs[:(i+1)]-26))
+            else:
+                ys.append(np.sum(xs[(i-11):(i+1)]-26))
+        return np.array(ys)
+
+    train_cdhs = np.array([])
+    test_cdhs = np.array([])
+    
+    for num in range(1,101,1):
+        train_temp = combined_clust_df[combined_clust_df['건물번호'] == num]
+        test_temp = test_df[test_df['건물번호'] == num]
+        train_cdh = CDH(train_temp['기온(C)'].values)
+        test_cdh = CDH(test_temp['기온(C)'].values)
+        train_cdhs = np.concatenate([train_cdhs, train_cdh])
+        test_cdhs = np.concatenate([test_cdhs, test_cdh])
+    combined_clust_df['CDH'] = train_cdhs
+    test_df['CDH'] = test_cdhs
+
+  
 - 빌딩별 일평균 기온/불쾌지수/냉방도일
+
 - 빌딩별 시간, 요일별 전력사용량 평균
+
 - 빌딩별 시간, 요일에 따라 평균 전력사용량이 높은 특정 시간대를 work_time, 낮은 특정 요일을 low_day, 특이한 경우의 particular로 feature 생성
+
+_빌딩별 시간별 요일별 전력사용량 평균 시각화_
+
+![image](https://github.com/2023dacon/Power-usage-Prediction/assets/90303745/be28f7b0-ea41-4937-9472-b7916b3eafdc)
+
+_군집별 빌딩별 시간별 전력샤용량 시각화_
+
+![image](https://github.com/2023dacon/Power-usage-Prediction/assets/90303745/09e958eb-d1bf-4e62-ab72-f6fc4c06ba20)
+
+**두개의 시각화 자료를 통해 work_time, low_day, particular 생성**
+
+![image](https://github.com/2023dacon/Power-usage-Prediction/assets/90303745/d8ac3f61-ea08-455f-8eb0-96ae813735dc)
+
+**특이한 이상치 데이터 삭제 및 특정 기간 이후 변동의 일정한 변화가 있는 빌딩의 기간 조정**
+
+![image](https://github.com/2023dacon/Power-usage-Prediction/assets/90303745/341286d2-cb21-47c3-afec-6b52e2ae77ff)
+
 
 
 ---
