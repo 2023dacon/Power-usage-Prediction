@@ -85,37 +85,47 @@ num_date_time은 건물번호와 시간으로 구성된 ID
 
 ![image](https://github.com/2023dacon/Power-usage-Prediction/assets/90303745/8a9445ea-8bce-4811-be60-71b8a2ca31c0)
 
+
+
 <h3>년 기준 시간 평균 전력소비량</h3>
 
 ![image](https://github.com/2023dacon/Power-usage-Prediction/assets/90303745/5dc1a33d-e84d-4038-8443-cfa5e9a35618)
+
 
 <h3>일 기준 시간 평균 전력소비량</h3>
 
 ![image](https://github.com/2023dacon/Power-usage-Prediction/assets/90303745/a535e9f6-1d4c-450a-ac3d-9e17becc38c1)
 
+
 <h3>월 기준 일 평균 전력소비량</h3>
 
 ![image](https://github.com/2023dacon/Power-usage-Prediction/assets/90303745/fbe1124b-283b-41a1-82e4-a2093103131b)
+
 
 <h3>년 기준 월 평균 전력소비량</h3>
 
 ![image](https://github.com/2023dacon/Power-usage-Prediction/assets/90303745/6db66951-80fc-4965-ae97-593289bea42b)
 
+
 <h3>요일별 평균 전력소비량</h3>
 
 ![image](https://github.com/2023dacon/Power-usage-Prediction/assets/90303745/179f5cc9-86d6-41d2-ac3c-01a648a5a798)
+
 
 <h3>빌딩 타입 별 평균 전력 소비량</h3>
 
 ![image](https://github.com/2023dacon/Power-usage-Prediction/assets/90303745/c5a1a8bc-fa17-401c-96f2-3881b288dd9d)
 
+
 <h3>빌딩 타입 별 일 기준 시간 평균 전력 소비량</h3>
 
 ![image](https://github.com/2023dacon/Power-usage-Prediction/assets/90303745/d1615bf9-dfc2-4ede-b9b8-07f00da8d6ae)
 
+
 <h3>빌딩 타입 별 요일 평균 전력 소비량</h3>
 
 ![image](https://github.com/2023dacon/Power-usage-Prediction/assets/90303745/7b52b113-866a-4e07-87c6-38db2b65da13)
+
 
 <h3>feature 간의 상관관계 시각화</h3>
 
@@ -136,6 +146,9 @@ _전력소비량 기준, 대각 행렬 기준 한 쪽만 나타나게 설정_
 
     train_df['windspeed'].fillna(method='ffill', inplace=True)
     train_df['humidity'].fillna(method='ffill', inplace=True)
+
+<hr>
+
 
 <h3>2. 강수량, 일사, 일조 feature 삭제</h3>
 - test.csv에 일사, 일조 정보 없으며 강수량의 경우 습도로 대체 되며 중요도가 높지 않아 삭제 처리
