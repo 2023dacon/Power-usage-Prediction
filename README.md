@@ -82,11 +82,10 @@ num_date_time은 건물번호와 시간으로 구성된 ID
 - 풍속이 0인 경우 결측치가 아닌 기상청 관측 기준 '무풍' 일경우 0으로 기입
 무풍 : 평균 풍속이 1kts 미만인 경우
 ```
-  train_df['windspeed'].fillna(method='ffill', inplace=True)
-  train_df['humidity'].fillna(method='ffill', inplace=True)
-
-    test_df['windspeed'].fillna(method='ffill', inplace=True)
-    test_df['humidity'].fillna(method='ffill', inplace=True)
+train_df['windspeed'].fillna(method='ffill', inplace=True)
+train_df['humidity'].fillna(method='ffill', inplace=True)
+test_df['windspeed'].fillna(method='ffill', inplace=True)
+test_df['humidity'].fillna(method='ffill', inplace=True)
 ```
 <h3>2. 강수량, 일사, 일조 feature 삭제</h3>
 - test.csv에 일사, 일조 정보 없으며 강수량의 경우 습도로 대체 되며 중요도가 높지 않아 삭제 처리
