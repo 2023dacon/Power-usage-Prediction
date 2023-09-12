@@ -233,7 +233,6 @@ _변환 후 4개로 줄어듦_
     train_df['temperature_2'] = train_df.groupby('building_number')['temperature'].shift(periods=2)
     train_df['temperature_2'] = train_df[train_df['temperature_2'] != 0]['temperature'] - train_df[train_df['temperature_2'] != 0]['temperature_2']
 
-  
 - 주말 및 공휴일
 
 
@@ -248,27 +247,7 @@ _변환 후 4개로 줄어듦_
 
 - 냉방도일(CDH)
 
-    def CDH(xs):
-        ys = []
-        for i in range(len(xs)):
-            if i < 11:
-                ys.append(np.sum(xs[:(i+1)]-26))
-            else:
-                ys.append(np.sum(xs[(i-11):(i+1)]-26))
-        return np.array(ys)
-
-    train_cdhs = np.array([])
-    test_cdhs = np.array([])
-    
-    for num in range(1,101,1):
-        train_temp = combined_clust_df[combined_clust_df['건물번호'] == num]
-        test_temp = test_df[test_df['건물번호'] == num]
-        train_cdh = CDH(train_temp['기온(C)'].values)
-        test_cdh = CDH(test_temp['기온(C)'].values)
-        train_cdhs = np.concatenate([train_cdhs, train_cdh])
-        test_cdhs = np.concatenate([test_cdhs, test_cdh])
-    combined_clust_df['CDH'] = train_cdhs
-    test_df['CDH'] = test_cdhs
+![image](https://github.com/2023dacon/Power-usage-Prediction/assets/90303745/1e73ac6c-db0c-4c45-95c6-5705c52ca346)
 
   
 - 빌딩별 일평균 기온/불쾌지수/냉방도일
