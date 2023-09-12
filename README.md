@@ -91,17 +91,21 @@ num_date_time은 건물번호와 시간으로 구성된 ID
 
 <h3>2. 강수량, 일사, 일조 feature 삭제</h3>
 - test.csv에 일사, 일조 정보 없으며 강수량의 경우 습도로 대체 되며 중요도가 높지 않아 삭제 처리
-  train_df = train_df.drop(['rainfall','sunshine', 'solar_radiation'], axis=1)
-  test_df = test_df.drop(['rainfall'], axis=1)
+
+    train_df = train_df.drop(['rainfall','sunshine', 'solar_radiation'], axis=1)
+    test_df = test_df.drop(['rainfall'], axis=1)
+  
 <h3>3. 태양광 용량, ESS 저장 용량, PCS 용량의 '-'를 0으로 대체 및 float 변환</h3>
-  train_df = train_df.replace('-', '0')
-  test_df = test_df.replace('-', '0')
-  train_df['solar_power_capacity'] = train_df['solar_power_capacity'].astype('float64')
-  train_df['ess_capacity'] = train_df['ess_capacity'].astype('float64')
-  train_df['pcs_capacity'] = train_df['pcs_capacity'].astype('float64')
-  test_df['solar_power_capacity'] = test_df['solar_power_capacity'].astype('float64')
-  test_df['ess_capacity'] = test_df['ess_capacity'].astype('float64')
-  test_df['pcs_capacity'] = test_df['pcs_capacity'].astype('float64')
+
+    train_df = train_df.replace('-', '0')
+    test_df = test_df.replace('-', '0')
+    train_df['solar_power_capacity'] = train_df['solar_power_capacity'].astype('float64')
+    train_df['ess_capacity'] = train_df['ess_capacity'].astype('float64')
+    train_df['pcs_capacity'] = train_df['pcs_capacity'].astype('float64')
+    test_df['solar_power_capacity'] = test_df['solar_power_capacity'].astype('float64')
+    test_df['ess_capacity'] = test_df['ess_capacity'].astype('float64')
+    test_df['pcs_capacity'] = test_df['pcs_capacity'].astype('float64')
+    
 <h3>4. 왜도, 첨도가 높은 feature인 연면적, 냉방 면적, 태양광 용량, ESS 저장 용량, PCS 용량을 log 변환</h3>
 <h3>5. 시간, 일, 요일 feature sin, cos 변환</h3>
 <h3>6. 빌딩 타입 one-hot encoding</h3>
