@@ -1,4 +1,4 @@
-![image](https://github.com/2023dacon/Power-usage-Prediction/assets/90303745/cea767d4-d41f-4202-a808-552b9406a974)
+![image](https://github.com/2023dacon/Power-usage-Prediction/assets/90303745/4472d4a2-77db-49f4-869d-71d51a8e0f8f)![image](https://github.com/2023dacon/Power-usage-Prediction/assets/90303745/cea767d4-d41f-4202-a808-552b9406a974)
 
 <div align=center>
   <h1>
@@ -142,18 +142,19 @@ _전력소비량 기준, 대각 행렬 기준 한 쪽만 나타나게 설정_
 <h3>1. 풍속, 습도 결측치 행 ffill을 사용하여 처리</h3> 
 
 **풍속이 0인 경우 결측치가 아닌 기상청 관측 기준 '무풍' 일경우 0으로 기입**
+
+
 *무풍 : 평균 풍속이 1kts 미만인 경우*
 
     train_df['windspeed'].fillna(method='ffill', inplace=True)
     train_df['humidity'].fillna(method='ffill', inplace=True)
-
-<hr>
 
 
 <h3>2. 강수량, 일사, 일조 feature 삭제</h3>
 - test.csv에 일사, 일조 정보 없으며 강수량의 경우 습도로 대체 되며 중요도가 높지 않아 삭제 처리
 
     train_df = train_df.drop(['rainfall','sunshine', 'solar_radiation'], axis=1)
+
   
 <h3>3. 태양광 용량, ESS 저장 용량, PCS 용량의 '-'를 0으로 대체 및 float 변환</h3>
 
@@ -199,6 +200,7 @@ _태양광 용량, ESS 저장 용량, PCS 용량의 왜도와 첨도가 매우 �
 
 **건물별 전력사용량의 왜도가 1.5 이상 또는 이하인 경우 RED color로 표시 한 결과 14개의 빌딩 발견**
 
+
 _변환 후 4개로 줄어듦_
 
 ![image](https://github.com/2023dacon/Power-usage-Prediction/assets/90303745/d638105f-592b-49d8-949e-40ab2e07052e)
@@ -218,8 +220,11 @@ _변환 후 4개로 줄어듦_
 - 불쾌지수 (기온, 습도 활용)
 
     train_df['discomfort'] = 0.81 * train_df['temperature'] + 0.01 * train_df['humidity'] * (0.99 * train_df['temperature'] - 14.3) + 46.3
+
   
 - 체감온도 (기온, 풍속 활용)
+
+
 - 기온, 풍속, 습도, 불쾌지수의 1,2,3 시간 변화
 
     train_df['temperature_1'] = train_df.groupby('building_number')['temperature'].shift()
@@ -227,11 +232,20 @@ _변환 후 4개로 줄어듦_
     train_df['temperature_1'] = train_df['temperature_1'].fillna(0)
     train_df['temperature_2'] = train_df.groupby('building_number')['temperature'].shift(periods=2)
     train_df['temperature_2'] = train_df[train_df['temperature_2'] != 0]['temperature'] - train_df[train_df['temperature_2'] != 0]['temperature_2']
+
   
 - 주말 및 공휴일
+
+
 - 시간, 일, 요일, 달 (빌딩번호/일자정보(num_date_time) 데이터 활용)
+
+
 - 태양광, ESS 설치 여부 (태양광 용량, ESS 용량 feature 여부)
+
+
 - 불쾌지수, 기온의 3시간, 5시간 이동평균
+
+
 - 냉방도일(CDH)
 
     def CDH(xs):
@@ -259,21 +273,27 @@ _변환 후 4개로 줄어듦_
   
 - 빌딩별 일평균 기온/불쾌지수/냉방도일
 
+
 - 빌딩별 시간, 요일별 전력사용량 평균
 
+
 - 빌딩별 시간, 요일에 따라 평균 전력사용량이 높은 특정 시간대를 work_time, 낮은 특정 요일을 low_day, 특이한 경우의 particular로 feature 생성
+
 
 _빌딩별 시간별 요일별 전력사용량 평균 시각화_
 
 ![image](https://github.com/2023dacon/Power-usage-Prediction/assets/90303745/be28f7b0-ea41-4937-9472-b7916b3eafdc)
 
+
 _군집별 빌딩별 시간별 전력샤용량 시각화_
 
 ![image](https://github.com/2023dacon/Power-usage-Prediction/assets/90303745/09e958eb-d1bf-4e62-ab72-f6fc4c06ba20)
 
+
 **두개의 시각화 자료를 통해 work_time, low_day, particular 생성**
 
 ![image](https://github.com/2023dacon/Power-usage-Prediction/assets/90303745/d8ac3f61-ea08-455f-8eb0-96ae813735dc)
+
 
 **특이한 이상치 데이터 삭제 및 특정 기간 이후 변동의 일정한 변화가 있는 빌딩의 기간 조정**
 
@@ -286,9 +306,16 @@ _군집별 빌딩별 시간별 전력샤용량 시각화_
 
 ## Feature selection 방식 (모델링 방식에 따라 다르지만 사용한 방식들을 나열함)
 - XGB feature importance
+
+  
 - Shap value with XGB
+
+
 - RFECV with XGB
+
+
 - 상관관계 높은 변수는 다중공선성의 문제를 야기하며 성능 저하를 일으키기 때문에 삭제
+
 
 ---
 
@@ -321,3 +348,6 @@ _군집별 빌딩별 시간별 전력샤용량 시각화_
   <hr>
 <h2> 총 참가자 1880명 중 Private 7.80492 146등, Public 6.13548 157등 으로 마감</h2>
 </div>
+
+
+![image](https://github.com/2023dacon/Power-usage-Prediction/assets/90303745/5591a10a-4217-499b-b574-9475c8d47bd8)
