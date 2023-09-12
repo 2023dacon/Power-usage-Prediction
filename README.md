@@ -78,24 +78,21 @@ num_date_time은 건물번호와 시간으로 구성된 ID
 
 
 ## Data Preprocessing
-<h2>1. 풍속, 습도 결측치 행 직 전 시간대 값으로 대체</h2> 
+<h3>1. 풍속, 습도 결측치 행 ffill을 사용하여 처리</h3> 
 - 풍속이 0인 경우 결측치가 아닌 기상청 관측 기준 '무풍' 일경우 0으로 기입
 무풍 : 평균 풍속이 1kts 미만인 경우
-
+```
   train_df['windspeed'].fillna(method='ffill', inplace=True)
   train_df['humidity'].fillna(method='ffill', inplace=True)
 
-  test_df['windspeed'].fillna(method='ffill', inplace=True)
-  test_df['humidity'].fillna(method='ffill', inplace=True)
-
-
-<h2>2. 강수량, 일사, 일조 feature 삭제</h2>
+    test_df['windspeed'].fillna(method='ffill', inplace=True)
+    test_df['humidity'].fillna(method='ffill', inplace=True)
+```
+<h3>2. 강수량, 일사, 일조 feature 삭제</h3>
 - test.csv에 일사, 일조 정보 없으며 강수량의 경우 습도로 대체 되며 중요도가 높지 않아 삭제 처리
   train_df = train_df.drop(['rainfall','sunshine', 'solar_radiation'], axis=1)
   test_df = test_df.drop(['rainfall'], axis=1)
-
-
-<h2>3. 태양광 용량, ESS 저장 용량, PCS 용량의 '-'를 0으로 대체 및 float 변환</h2>
+<h3>3. 태양광 용량, ESS 저장 용량, PCS 용량의 '-'를 0으로 대체 및 float 변환</h3>
   train_df = train_df.replace('-', '0')
   test_df = test_df.replace('-', '0')
   train_df['solar_power_capacity'] = train_df['solar_power_capacity'].astype('float64')
@@ -104,13 +101,12 @@ num_date_time은 건물번호와 시간으로 구성된 ID
   test_df['solar_power_capacity'] = test_df['solar_power_capacity'].astype('float64')
   test_df['ess_capacity'] = test_df['ess_capacity'].astype('float64')
   test_df['pcs_capacity'] = test_df['pcs_capacity'].astype('float64')
+<h3>4. 왜도, 첨도가 높은 feature인 연면적, 냉방 면적, 태양광 용량, ESS 저장 용량, PCS 용량을 log 변환</h3>
+<h3>5. 시간, 일, 요일 feature sin, cos 변환</h3>
+<h3>6. 빌딩 타입 one-hot encoding</h3>
+<h3>7. 전력사용량 log 변환</h3>
+<h3>8. 연속형 변수 StandardScaling</h3>
 
-
-<h2>4. 왜도, 첨도가 높은 feature인 연면적, 냉방 면적, 태양광 용량, ESS 저장 용량, PCS 용량을 log 변환</h2>
-<h2>5. 시간, 일, 요일 feature sin, cos 변환</h2>
-<h2>6. 빌딩 타입 one-hot encoding</h2>
-<h2>7. 전력사용량 log 변환</h2>
-<h2>8. 연속형 변수 StandardScaling</h2>
 
 
 ---
