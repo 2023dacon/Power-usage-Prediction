@@ -79,10 +79,9 @@ num_date_time은 건물번호와 시간으로 구성된 ID
 
 ## Data Preprocessing
 <h3>1. 풍속, 습도 결측치 행 ffill을 사용하여 처리</h3> 
-- 풍속이 0인 경우 결측치가 아닌 기상청 관측 기준 '무풍' 일경우 0으로 기입
 
-
-무풍 : 평균 풍속이 1kts 미만인 경우
+**풍속이 0인 경우 결측치가 아닌 기상청 관측 기준 '무풍' 일경우 0으로 기입**
+*무풍 : 평균 풍속이 1kts 미만인 경우*
 
     train_df['windspeed'].fillna(method='ffill', inplace=True)
     train_df['humidity'].fillna(method='ffill', inplace=True)
@@ -107,6 +106,11 @@ num_date_time은 건물번호와 시간으로 구성된 ID
     test_df['pcs_capacity'] = test_df['pcs_capacity'].astype('float64')
     
 <h3>4. 왜도, 첨도가 높은 feature인 연면적, 냉방 면적, 태양광 용량, ESS 저장 용량, PCS 용량을 log 변환</h3>
+![image](https://github.com/2023dacon/Power-usage-Prediction/assets/90303745/55d2378e-915a-4a55-b6ea-e5a127f76fe7)
+
+**태양광 용량, ESS 저장 용량, PCS 용량의 왜도와 첨도가 매우 큼**
+
+
 <h3>5. 시간, 일, 요일 feature sin, cos 변환</h3>
 <h3>6. 빌딩 타입 one-hot encoding</h3>
 <h3>7. 전력사용량 log 변환</h3>
