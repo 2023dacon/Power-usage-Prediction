@@ -106,6 +106,7 @@ num_date_time은 건물번호와 시간으로 구성된 ID
     test_df['pcs_capacity'] = test_df['pcs_capacity'].astype('float64')
     
 <h3>4. 왜도, 첨도가 높은 feature인 연면적, 냉방 면적, 태양광 용량, ESS 저장 용량, PCS 용량을 log 변환</h3>
+
 ![image](https://github.com/2023dacon/Power-usage-Prediction/assets/90303745/55d2378e-915a-4a55-b6ea-e5a127f76fe7)
 
 **태양광 용량, ESS 저장 용량, PCS 용량의 왜도와 첨도가 매우 큼**
