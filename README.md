@@ -77,7 +77,56 @@ num_date_time은 건물번호와 시간으로 구성된 ID
 ---
 
 
-## Data Preprocessing
+## EDA (Exploratory Data Analysis)
+
+<h3>년 기준 일별 평균 전력소비량</h3>
+
+![image](https://github.com/2023dacon/Power-usage-Prediction/assets/90303745/8a9445ea-8bce-4811-be60-71b8a2ca31c0)
+
+<h3>년 기준 시간 평균 전력소비량</h3>
+
+![image](https://github.com/2023dacon/Power-usage-Prediction/assets/90303745/5dc1a33d-e84d-4038-8443-cfa5e9a35618)
+
+<h3>일 기준 시간 평균 전력소비량</h3>
+
+![image](https://github.com/2023dacon/Power-usage-Prediction/assets/90303745/a535e9f6-1d4c-450a-ac3d-9e17becc38c1)
+
+<h3>월 기준 일 평균 전력소비량</h3>
+
+![image](https://github.com/2023dacon/Power-usage-Prediction/assets/90303745/fbe1124b-283b-41a1-82e4-a2093103131b)
+
+<h3>년 기준 월 평균 전력소비량</h3>
+
+![image](https://github.com/2023dacon/Power-usage-Prediction/assets/90303745/6db66951-80fc-4965-ae97-593289bea42b)
+
+<h3>요일별 평균 전력소비량</h3>
+
+![image](https://github.com/2023dacon/Power-usage-Prediction/assets/90303745/179f5cc9-86d6-41d2-ac3c-01a648a5a798)
+
+<h3>빌딩 타입 별 평균 전력 소비량</h3>
+
+![image](https://github.com/2023dacon/Power-usage-Prediction/assets/90303745/c5a1a8bc-fa17-401c-96f2-3881b288dd9d)
+
+<h3>빌딩 타입 별 일 기준 시간 평균 전력 소비량</h3>
+
+![image](https://github.com/2023dacon/Power-usage-Prediction/assets/90303745/d1615bf9-dfc2-4ede-b9b8-07f00da8d6ae)
+
+<h3>빌딩 타입 별 요일 평균 전력 소비량</h3>
+
+![image](https://github.com/2023dacon/Power-usage-Prediction/assets/90303745/7b52b113-866a-4e07-87c6-38db2b65da13)
+
+<h3>feature 간의 상관관계 시각화</h3>
+
+_전력소비량 기준, 대각 행렬 기준 한 쪽만 나타나게 설정_
+
+![image](https://github.com/2023dacon/Power-usage-Prediction/assets/90303745/da0dd964-13e9-4167-ae8c-7e6a66392ef8)
+
+
+---
+
+
+## Data Preprocessing (test data도 마찬가지로 처리)
+
 <h3>1. 풍속, 습도 결측치 행 ffill을 사용하여 처리</h3> 
 
 **풍속이 0인 경우 결측치가 아닌 기상청 관측 기준 '무풍' 일경우 0으로 기입**
@@ -85,36 +134,60 @@ num_date_time은 건물번호와 시간으로 구성된 ID
 
     train_df['windspeed'].fillna(method='ffill', inplace=True)
     train_df['humidity'].fillna(method='ffill', inplace=True)
-    test_df['windspeed'].fillna(method='ffill', inplace=True)
-    test_df['humidity'].fillna(method='ffill', inplace=True)
 
 <h3>2. 강수량, 일사, 일조 feature 삭제</h3>
 - test.csv에 일사, 일조 정보 없으며 강수량의 경우 습도로 대체 되며 중요도가 높지 않아 삭제 처리
 
     train_df = train_df.drop(['rainfall','sunshine', 'solar_radiation'], axis=1)
-    test_df = test_df.drop(['rainfall'], axis=1)
   
 <h3>3. 태양광 용량, ESS 저장 용량, PCS 용량의 '-'를 0으로 대체 및 float 변환</h3>
 
     train_df = train_df.replace('-', '0')
-    test_df = test_df.replace('-', '0')
     train_df['solar_power_capacity'] = train_df['solar_power_capacity'].astype('float64')
     train_df['ess_capacity'] = train_df['ess_capacity'].astype('float64')
     train_df['pcs_capacity'] = train_df['pcs_capacity'].astype('float64')
-    test_df['solar_power_capacity'] = test_df['solar_power_capacity'].astype('float64')
-    test_df['ess_capacity'] = test_df['ess_capacity'].astype('float64')
-    test_df['pcs_capacity'] = test_df['pcs_capacity'].astype('float64')
+    
     
 <h3>4. 왜도, 첨도가 높은 feature인 연면적, 냉방 면적, 태양광 용량, ESS 저장 용량, PCS 용량을 log 변환</h3>
 
 ![image](https://github.com/2023dacon/Power-usage-Prediction/assets/90303745/55d2378e-915a-4a55-b6ea-e5a127f76fe7)
 
-**태양광 용량, ESS 저장 용량, PCS 용량의 왜도와 첨도가 매우 큼**
+_태양광 용량, ESS 저장 용량, PCS 용량의 왜도와 첨도가 매우 크기에 log 변환 수행_
 
 
 <h3>5. 시간, 일, 요일 feature sin, cos 변환</h3>
+
+**sin cos 함수를 이용한 시간의 연속적 표현 (cyclical time encoding)을 위함**
+
+    train['hour_sin'] = np.sin(2 * np.pi * (train['hour']+1)/24.0)
+    train['hour_cos'] = np.cos(2 * np.pi * (train['hour']+1)/24.0)
+    
+    train_6 = train[train['month']==6]
+    train_78 = train[train['month']!=6]
+    train_6['day_sin'] = np.sin(2 * np.pi * train['day']/30)
+    train_6['day_cos'] = np.cos(2 * np.pi * train['day']/30)
+    
+    train_78['day_sin'] = np.sin(2 * np.pi * train['day']/31)
+    train_78['day_cos'] = np.cos(2 * np.pi * train['day']/31)
+    train = pd.concat([train_6,train_78])
+    
+    train['weekday_sin'] = np.sin(2 * np.pi * (train['weekday']+1)/7)
+    train['weekday_cos'] = np.cos(2 * np.pi * (train['weekday']+1)/7)
+
+
 <h3>6. 빌딩 타입 one-hot encoding</h3>
+
+
 <h3>7. 전력사용량 log 변환</h3>
+
+![image](https://github.com/2023dacon/Power-usage-Prediction/assets/90303745/9d3b081e-6a05-4870-8cd8-f1c0742f7f78)
+
+**건물별 전력사용량의 왜도가 1.5 이상 또는 이하인 경우 RED color로 표시 한 결과 14개의 빌딩 발견**
+
+_변환 후 4개로 줄어듦_
+
+
+
 <h3>8. 연속형 변수 StandardScaling</h3>
 
 
