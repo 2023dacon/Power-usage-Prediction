@@ -11,7 +11,17 @@
 
 
 ## 목차
-[배경](#배경)
+1. [배경](#배경)
+2. [주최 / 주관](#주최-/-주관)
+3. [데이터 소개](#데이터-소개)
+4. [평가방식](#평가방식)
+5. [EDA (Exploratory Data Analysis)](#eda-(exploratory-data-analysis))
+6. [Data Preprocessing](#data-preprocessing)
+7. [파생변수 생성](#파생변수-생성)
+8. [Feature Selection](#feature-selection)
+9. [모델링](#모델링)
+10. [후처리](#후처리)
+11. [최종 결과](#최종-결과)
 
 
 
