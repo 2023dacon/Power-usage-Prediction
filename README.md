@@ -329,22 +329,22 @@ _모델링 방식에 따라 다르지만 사용한 방식들을 나열함_
 
 
 ## 모델링
-<h3> 1. 전체 데이터 XGB</h3>
+<h4> 1. 전체 데이터 XGB</h4>
 
 
-<h3> 2. 빌딩 번호별 XGB</h3>
+<h4> 2. 빌딩 번호별 XGB</h4>
 
 
-<h3> 3. 빌딩 번호, 시간, 요일에 따른 K-means clustering 후 군집별 pycaret 1등 모델</h3>
+<h4> 3. 빌딩 번호, 시간, 요일에 따른 K-means clustering 후 군집별 pycaret 1등 모델</h4>
 
 
 <h3> 4. 빌딩 타입, 시간, 요일에 따른 K-menans clustering 후 군집별 pycaret 기준 SMAPE 1등 모델</h3>
 
 
-<h3> 5. 빌딩 타입, 시간, 요일에 따른 K-menans clustering 후 군집별 pycaret 기준 SMAPE 상위 모델</h3> <b>스태킹</b>
+<h3> 5. 빌딩 타입, 시간, 요일에 따른 K-menans clustering 후 군집별 pycaret 기준 SMAPE 상위 모델<b>스태킹</b></h3>
 
 
-<h3> 6. 빌딩 타입, 시간, 요일에 따른 K-menans clustering 후 군집별 pycaret 기준 SMAPE 상위 모델</h3> <b>앙상블</b>
+<h3> 6. 빌딩 타입, 시간, 요일에 따른 K-menans clustering 후 군집별 pycaret 기준 SMAPE 상위 모델 <b>앙상블</b></h3>
 
 
 ---
