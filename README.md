@@ -287,17 +287,17 @@ _etc.._
 
 
 ## Feature selection 방식 (모델링 방식에 따라 다르지만 사용한 방식들을 나열함)
-- XGB feature importance
+<h3>XGB feature importance</h3>
 
 ![image](https://github.com/2023dacon/Power-usage-Prediction/assets/90303745/c0e242d9-e0e7-4bd8-bfa3-ba46cad7f367)
 
   
-- Shap value with XGB
+<h3>Shap value with XGB</h3>
 
 ![image](https://github.com/2023dacon/Power-usage-Prediction/assets/90303745/5362194f-0d57-4cdf-af24-f60f3dcbe95e)
 
 
-- RFECV with XGB
+<h3>RFECV with XGB</h3>
 
   ![image](https://github.com/2023dacon/Power-usage-Prediction/assets/90303745/af3e1f14-49bd-40a6-95c7-4471d8186957)
 
