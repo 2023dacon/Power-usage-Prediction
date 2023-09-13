@@ -1,4 +1,4 @@
-![image](https://github.com/2023dacon/Power-usage-Prediction/assets/90303745/4472d4a2-77db-49f4-869d-71d51a8e0f8f)![image](https://github.com/2023dacon/Power-usage-Prediction/assets/90303745/cea767d4-d41f-4202-a808-552b9406a974)
+![image](https://github.com/2023dacon/Power-usage-Prediction/assets/90303745/308068f9-4d1d-43fb-8f77-67a4a04b1023)
 
 <div align=center>
   <h1>
@@ -218,20 +218,22 @@ _변환 후 4개로 줄어듦_
 ## 파생변수 생성
 
 - 불쾌지수 (기온, 습도 활용)
-
+```
     train_df['discomfort'] = 0.81 * train_df['temperature'] + 0.01 * train_df['humidity'] * (0.99 * train_df['temperature'] - 14.3) + 46.3
-
+```
   
 - 체감온도 (기온, 풍속 활용)
 
 
 - 기온, 풍속, 습도, 불쾌지수의 1,2,3 시간 변화
-
+```
     train_df['temperature_1'] = train_df.groupby('building_number')['temperature'].shift()
     train_df['temperature_1'] = train_df[train_df['temperature_1'] != 0]['temperature'] - train_df[train_df['temperature_1'] != 0]['temperature_1']
     train_df['temperature_1'] = train_df['temperature_1'].fillna(0)
     train_df['temperature_2'] = train_df.groupby('building_number')['temperature'].shift(periods=2)
     train_df['temperature_2'] = train_df[train_df['temperature_2'] != 0]['temperature'] - train_df[train_df['temperature_2'] != 0]['temperature_2']
+```
+
 
 - 주말 및 공휴일
 
@@ -279,6 +281,7 @@ _군집별 빌딩별 시간별 전력샤용량 시각화_
 ![image](https://github.com/2023dacon/Power-usage-Prediction/assets/90303745/341286d2-cb21-47c3-afec-6b52e2ae77ff)
 
 
+_etc.._
 
 ---
 
@@ -286,14 +289,20 @@ _군집별 빌딩별 시간별 전력샤용량 시각화_
 ## Feature selection 방식 (모델링 방식에 따라 다르지만 사용한 방식들을 나열함)
 - XGB feature importance
 
+![image](https://github.com/2023dacon/Power-usage-Prediction/assets/90303745/c0e242d9-e0e7-4bd8-bfa3-ba46cad7f367)
+
   
 - Shap value with XGB
+
+![image](https://github.com/2023dacon/Power-usage-Prediction/assets/90303745/5362194f-0d57-4cdf-af24-f60f3dcbe95e)
 
 
 - RFECV with XGB
 
+  ![image](https://github.com/2023dacon/Power-usage-Prediction/assets/90303745/af3e1f14-49bd-40a6-95c7-4471d8186957)
 
-- 상관관계 높은 변수는 다중공선성의 문제를 야기하며 성능 저하를 일으키기 때문에 삭제
+
+- 상관관계 높은 변수는 **다중공선성**의 문제를 야기하며 성능 저하를 일으키기 때문에 삭제
 
 
 ---
