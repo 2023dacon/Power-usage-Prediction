@@ -6,11 +6,23 @@
     <h3>건물 정보와 시공간 정보를 활용하여 특정 시점의 전력 사용량을 예측하는 모델 개발
 </div>
 <hr>
-<div align=right>
-  <h5>EDA 및 코드는 각 팀원의 개별 파일에 포함되어 있음</h5>
-</div>
+
 
 ---
+
+
+[배경](#배경)
+[주최 / 주관](#주최-/-주관)
+[참가 대상](#참가-대상)
+[데이터 소개]
+[평가방식]
+[EDA (Exploratory Data Analysis)]
+[Data Preprocessing]
+[파생변수 생성]
+[Feature Selection]
+[모델링]
+[후처리]
+[최종 결과]
 
 
 <br>
@@ -32,14 +44,7 @@
 ---
 
 
-## 참가 대상
-데이커라면 누구나
-
-
----
-
-
-## 데이터
+## 데이터 소개
 1. train.csv
 
   100개 건물들의 2022년 06월 01일부터 2022년 08월 24일까지의 데이터
@@ -74,6 +79,14 @@ num_date_time은 건물번호와 시간으로 구성된 ID
 - 2022.08.25 00:00:00부터 발생한 모든 사건은 전혀 알 수 없다고 가정하여 진행해야함
 - 따라서 2022.08.25 00:00:00 이전에 제작된 예보 데이터인 test.csv는 활용 가능
 - Pseudo Labeling은 사용 불가
+
+
+```
+def smape(true, pred):
+  v = 2*abs(pred-true)/(abs(pred)+abs(true))
+  output=np.mean(v)*100
+  return output
+```
 
 
 ---
@@ -137,7 +150,9 @@ _전력소비량 기준, 대각 행렬 기준 한 쪽만 나타나게 설정_
 ---
 
 
-## Data Preprocessing (test data도 마찬가지로 처리)
+## Data Preprocessing
+
+_test data도 마찬가지로 처리_
 
 <h3>1. 풍속, 습도 결측치 행 ffill을 사용하여 처리</h3> 
 
@@ -286,7 +301,7 @@ _etc.._
 ---
 
 
-## Feature selection 방식 (모델링 방식에 따라 다르지만 사용한 방식들을 나열함)
+## Feature Selection (모델링 방식에 따라 다르지만 사용한 방식들을 나열함)
 <h3>XGB feature importance</h3>
 
 ![image](https://github.com/2023dacon/Power-usage-Prediction/assets/90303745/c0e242d9-e0e7-4bd8-bfa3-ba46cad7f367)
@@ -308,14 +323,19 @@ _etc.._
 ---
 
 
-## 사용한 모델링 방식
+## 모델링
 <div align=center>
-  <h5> 1. 전체 데이터 XGB</h5>
-<h5> 2. 빌딩 번호별 XGB</h5>
-<h5> 3. 빌딩 번호, 시간, 요일에 따른 K-means clustering 후 군집별 pycaret 1등 모델</h5>
-<h5> 4. 빌딩 타입, 시간, 요일에 따른 K-menans clustering 후 군집별 pycaret 기준 SMAPE 1등 모델</h5>
-<h5> 5. 빌딩 타입, 시간, 요일에 따른 K-menans clustering 후 군집별 pycaret 기준 SMAPE 상위 모델 스태킹</h5>
-<h5> 6. 빌딩 타입, 시간, 요일에 따른 K-menans clustering 후 군집별 pycaret 기준 SMAPE 상위 모델 앙상블</h5>
+  <h4> 1. 전체 데이터 XGB</h4>
+  <hr>
+<h4> 2. 빌딩 번호별 XGB</h4>
+  <hr>
+<h4> 3. 빌딩 번호, 시간, 요일에 따른 K-means clustering 후 군집별 pycaret 1등 모델</h4>
+  <hr>
+<h4> 4. 빌딩 타입, 시간, 요일에 따른 K-menans clustering 후 군집별 pycaret 기준 SMAPE 1등 모델</h4>
+  <hr>
+<h4> 5. 빌딩 타입, 시간, 요일에 따른 K-menans clustering 후 군집별 pycaret 기준 SMAPE 상위 모델 <b>스태킹</b></h4>
+  <hr>
+<h4> 6. 빌딩 타입, 시간, 요일에 따른 K-menans clustering 후 군집별 pycaret 기준 SMAPE 상위 모델 <b>앙상블</b></h4>
 </div>
 
 
@@ -324,7 +344,7 @@ _etc.._
 
 ## 후처리
 해당 대회의 평가 지표인 SMAPE 특성 상 과소추정의 경우 과대추정에 비해 현저히 낮은 퍼포먼스를 보이기에
-예측값이 빌딩별 시간, 요일별 전력사용량의 평균보다 낮은 경우 평균으로 대체
+예측값이 빌딩별 시간, 요일별 전력사용량의 최솟값보다 낮은 경우 최솟값으로 대체
 
 
 ---
@@ -332,7 +352,7 @@ _etc.._
 
 ## 최종 결과
 <div align=center>
-<h3> 3., 5., 6. 의 모델링 방식이 우수한 성능을 보임</h3>
+<h3> 4., 5., 6. 의 모델링 방식이 우수한 성능을 보임</h3>
   <hr>
 <h2> 총 참가자 1880명 중 Private 7.80492 146등, Public 6.13548 157등 으로 마감</h2>
 </div>
