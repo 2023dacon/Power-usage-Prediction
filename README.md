@@ -12,17 +12,7 @@
 
 <h2>목차</h2>
 [1. 배경](#-배경)
-[2. 주최 / 주관](#주최-/-주관)
-[3. 참가 대상](#참가-대상)
-[4. 데이터 소개]
-[5. 평가방식]
-[EDA (Exploratory Data Analysis)]
-[Data Preprocessing]
-[파생변수 생성]
-[Feature Selection]
-[모델링]
-[후처리]
-[최종 결과]
+
 
 
 <br>
