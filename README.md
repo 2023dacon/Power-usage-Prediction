@@ -12,10 +12,10 @@
 
 ## 목차
 1. [배경](#배경)
-2. [주최 / 주관](#주최-/-주관)
+2. [주최 / 주관](#주최--주관)
 3. [데이터 소개](#데이터-소개)
 4. [평가방식](#평가방식)
-5. [EDA (Exploratory Data Analysis)](#eda-(exploratory-data-analysis))
+5. [EDA (Exploratory Data Analysis)](#eda-exploratory-data-analysis)
 6. [Data Preprocessing](#data-preprocessing)
 7. [파생변수 생성](#파생변수-생성)
 8. [Feature Selection](#feature-selection)
@@ -301,7 +301,12 @@ _etc.._
 ---
 
 
-## Feature Selection (모델링 방식에 따라 다르지만 사용한 방식들을 나열함)
+## Feature Selection
+
+
+_모델링 방식에 따라 다르지만 사용한 방식들을 나열함_
+
+
 <h3>XGB feature importance</h3>
 
 ![image](https://github.com/2023dacon/Power-usage-Prediction/assets/90303745/c0e242d9-e0e7-4bd8-bfa3-ba46cad7f367)
